@@ -61,10 +61,20 @@ namespace ImGuiNET {
             }
         }
 
-        public static implicit operator ImVector*(ImVector<T> v) => v.Native;
-        public static implicit operator ImVector<T>(ImVector* v) => new ImVector<T>(v);
+        public static implicit operator ImVector*(ImVector<T> v)
+        {
+            return v.Native;
+        }
 
-        public static implicit operator ImVector(ImVector<T> v) => *v.Native;
+        public static implicit operator ImVector<T>(ImVector* v)
+        {
+            return new ImVector<T>(v);
+        }
+
+        public static implicit operator ImVector(ImVector<T> v)
+        {
+            return *v.Native;
+        }
 
     }
 
@@ -112,10 +122,20 @@ namespace ImGuiNET {
             }
         }
 
-        public static implicit operator ImVector* (ImPtrVector<T> v) => v.Native;
-        public static implicit operator ImPtrVector<T>(ImVector* v) => new ImPtrVector<T>(v);
+        public static implicit operator ImVector*(ImPtrVector<T> v)
+        {
+            return v.Native;
+        }
 
-        public static implicit operator ImVector(ImPtrVector<T> v) => *v.Native;
+        public static implicit operator ImPtrVector<T>(ImVector* v)
+        {
+            return new ImPtrVector<T>(v);
+        }
+
+        public static implicit operator ImVector(ImPtrVector<T> v)
+        {
+            return *v.Native;
+        }
 
     }
 
@@ -123,21 +143,21 @@ namespace ImGuiNET {
         public readonly ImVector* Native;
 
         private static ConstructorInfo _NaiveWrapConstructor;
-        public static Func<IntPtr, T> Wrap = ptr => {
+        public static Func<IntPtr, T> Wrap = ptr =>  {
             if (_NaiveWrapConstructor == null)
                 _NaiveWrapConstructor = typeof(T).GetConstructors()[0];
             if (_NaiveWrapConstructor == null)
-                throw new NullReferenceException($"ImWrappedPtrVector<{typeof(T).GetType().FullName}>.Wrap");
+                throw new NullReferenceException("ImWrappedPtrVector<" + typeof(T).GetType().FullName + ">.Wrap");
             return (T) _NaiveWrapConstructor.Invoke(new object[] {
                 Convert.ChangeType(ptr, _NaiveWrapConstructor.GetParameters()[0].ParameterType)
             });
         };
         private static FieldInfo _NaiveWrapNativeField;
-        public static Func<T, IntPtr> Unwrap = wrap => {
+        public static Func<T, IntPtr> Unwrap = wrap =>  {
             if (_NaiveWrapNativeField == null)
                 _NaiveWrapNativeField = typeof(T).GetField("Native");
             if (_NaiveWrapNativeField == null)
-                throw new NullReferenceException($"ImWrappedPtrVector<{typeof(T).GetType().FullName}>.Unwrap");
+                throw new NullReferenceException("ImWrappedPtrVector<" + typeof(T).GetType().FullName + ">.Unwrap");
             return (IntPtr) Convert.ChangeType(_NaiveWrapNativeField.GetValue(wrap), typeof(IntPtr));
         };
 
@@ -182,10 +202,20 @@ namespace ImGuiNET {
             }
         }
 
-        public static implicit operator ImVector* (ImWrappedPtrVector<T> v) => v.Native;
-        public static implicit operator ImWrappedPtrVector<T>(ImVector* v) => new ImWrappedPtrVector<T>(v);
+        public static implicit operator ImVector*(ImWrappedPtrVector<T> v)
+        {
+            return v.Native;
+        }
 
-        public static implicit operator ImVector(ImWrappedPtrVector<T> v) => *v.Native;
+        public static implicit operator ImWrappedPtrVector<T>(ImVector* v)
+        {
+            return new ImWrappedPtrVector<T>(v);
+        }
+
+        public static implicit operator ImVector(ImWrappedPtrVector<T> v)
+        {
+            return *v.Native;
+        }
 
     }
 }

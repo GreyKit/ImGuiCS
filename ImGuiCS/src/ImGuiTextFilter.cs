@@ -10,17 +10,27 @@ namespace ImGuiNET {
         public struct TextRange {
             public byte* b;
             public byte* e;
-            public string Value => Marshal.PtrToStringAnsi((IntPtr) b, (int) (e - b));
+
+            public string Value
+            {
+                get { return Marshal.PtrToStringAnsi((IntPtr) b, (int) (e - b)); }
+            }
 
             public TextRange(byte* _b, byte* _e) { b = _b; e = _e; }
-            public bool empty() => b == e;
+
+            public bool empty()
+            {
+              return b == e;  
+            } 
             public byte front() { return *b; }
             static bool is_blank(byte c) { return c == ' ' || c == '\t'; }
             public void trim_blanks() { while (b < e && is_blank(*b)) b++; while (e > b && is_blank(*(e - 1))) e--; }
             // cimgui doesn't wrap this
             // IMGUI_API void split(char separator, ImVector<TextRange>& out)
             public void split(char separator, ref List<string> @out)
-                => @out = new List<string>(Value.Split(separator));
+            {
+                @out = new List<string>(Value.Split(separator));
+            }
         }
 
         public fixed byte InputBuf[256];

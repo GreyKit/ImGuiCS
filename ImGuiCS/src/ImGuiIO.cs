@@ -14,6 +14,7 @@ namespace ImGuiNET {
 
         internal ImGuiIO(NativeImGuiIO* native) {
             Native = native;
+
             MouseDown = new MouseDownStates(native);
             KeyMap = new KeyMap(Native);
             KeysDown = new KeyDownStates(Native);
@@ -106,20 +107,20 @@ namespace ImGuiNET {
         /// ImGui itself mostly only uses left button (BeginPopupContext** are using right button).
         /// Others buttons allows us to track if the mouse is being used by your application + available to user as a convenience via IsMouse** API.
         /// </summary>
-        public MouseDownStates MouseDown { get; }
+        public MouseDownStates MouseDown;
 
         /// <summary>
         /// Map of indices into the KeysDown[512] entries array.
         /// Default values: [unset]
         /// </summary>
-        public KeyMap KeyMap { get; }
+        public KeyMap KeyMap;
 
         /// <summary>
         /// Keyboard keys that are pressed (in whatever storage order you naturally have access to keyboard data)
         /// </summary>
-        public KeyDownStates KeysDown { get; }
+        public KeyDownStates KeysDown;
 
-        public ImFontAtlas FontAtlas { get; }
+        public ImFontAtlas FontAtlas;
 
         public bool FontAllowUserScaling {
             get { return Native->FontAllowUserScaling != 0; }
@@ -171,8 +172,13 @@ namespace ImGuiNET {
             RenderDrawListsFn_ native = (RenderDrawListsFn_) Marshal.GetDelegateForFunctionPointer(GetClipboardTextFn, typeof(RenderDrawListsFn_));
             return data => native((IntPtr) data.Native);
         }
+
         public IntPtr SetRenderDrawListsFn(RenderDrawListsFn fn)
-            => RenderDrawListsFn = Marshal.GetFunctionPointerForDelegate((RenderDrawListsFn_) (ptr => fn(new ImDrawData((NativeImDrawData*) ptr))));
+        {
+            return RenderDrawListsFn =
+                Marshal.GetFunctionPointerForDelegate((RenderDrawListsFn_) (ptr =>
+                    fn(new ImDrawData((NativeImDrawData*) ptr))));
+        }
 
         /// <summary>
         /// Optional: access OS clipboard
@@ -182,10 +188,17 @@ namespace ImGuiNET {
             get { return Native->GetClipboardTextFn; }
             set { Native->GetClipboardTextFn = value; }
         }
+
         public GetClipboardTextFn GetGetClipboardTextFn()
-            => (GetClipboardTextFn) Marshal.GetDelegateForFunctionPointer(GetClipboardTextFn, typeof(GetClipboardTextFn));
+        {
+            return (GetClipboardTextFn) Marshal.GetDelegateForFunctionPointer(GetClipboardTextFn,
+                typeof(GetClipboardTextFn));
+        }
+
         public IntPtr SetGetClipboardTextFn(GetClipboardTextFn fn)
-            => GetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(fn);
+        {
+            return GetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(fn);
+        }
 
         /// <summary>
         /// Optional: access OS clipboard
@@ -195,10 +208,16 @@ namespace ImGuiNET {
             get { return Native->SetClipboardTextFn; }
             set { Native->SetClipboardTextFn = value; }
         }
+
         public SetClipboardTextFn GetSetClipboardTextFn()
-            => (SetClipboardTextFn) Marshal.GetDelegateForFunctionPointer(SetClipboardTextFn, typeof(SetClipboardTextFn));
+        {
+            return (SetClipboardTextFn) Marshal.GetDelegateForFunctionPointer(SetClipboardTextFn, typeof(SetClipboardTextFn));
+        }
+
         public IntPtr SetSetClipboardTextFn(SetClipboardTextFn fn)
-            => SetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(fn);
+        {
+            return SetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(fn);
+        }
 
         /// <summary>
         /// Optional: access OS clipboard
@@ -217,10 +236,16 @@ namespace ImGuiNET {
             get { return Native->MemAllocFn; }
             set { Native->MemAllocFn = value; }
         }
+
         public MemAllocFn GetMemAllocFn()
-            => (MemAllocFn) Marshal.GetDelegateForFunctionPointer(MemAllocFn, typeof(MemAllocFn));
+        {
+            return (MemAllocFn) Marshal.GetDelegateForFunctionPointer(MemAllocFn, typeof(MemAllocFn));
+        }
+
         public IntPtr SetMemAllocFn(MemAllocFn fn)
-            => MemAllocFn = Marshal.GetFunctionPointerForDelegate(fn);
+        {
+            return MemAllocFn = Marshal.GetFunctionPointerForDelegate(fn);
+        }
 
         /// <summary>
         /// Optional: override memory allocations. MemFreeFn() may be called with a NULL pointer.
@@ -230,10 +255,16 @@ namespace ImGuiNET {
             get { return Native->MemFreeFn; }
             set { Native->MemFreeFn = value; }
         }
+
         public MemFreeFn GetMemFreeFn()
-            => (MemFreeFn) Marshal.GetDelegateForFunctionPointer(MemFreeFn, typeof(MemFreeFn));
+        {
+            return (MemFreeFn) Marshal.GetDelegateForFunctionPointer(MemFreeFn, typeof(MemFreeFn));
+        }
+
         public IntPtr SetMemFreeFn(MemFreeFn fn)
-            => MemFreeFn = Marshal.GetFunctionPointerForDelegate(fn);
+        {
+            return MemFreeFn = Marshal.GetFunctionPointerForDelegate(fn);
+        }
 
         private static IntPtr _MemAllocFnPtr;
         private static MemAllocFn _MemAllocFnDelegate;
@@ -245,9 +276,21 @@ namespace ImGuiNET {
             Invoke:
             return (IntPtr) _MemAllocFnDelegate(sz);
         }
-        public IntPtr MemAlloc(UIntPtr sz) => MemAlloc((void*) sz);
-        public IntPtr MemAlloc(IntPtr sz) => MemAlloc((void*) sz);
-        public IntPtr MemAlloc(int sz) => MemAlloc((void*) sz);
+
+        public IntPtr MemAlloc(UIntPtr sz)
+        {
+            return MemAlloc((void*) sz);
+        }
+
+        public IntPtr MemAlloc(IntPtr sz)
+        {
+            return MemAlloc((void*) sz);
+        }
+
+        public IntPtr MemAlloc(int sz)
+        {
+            return MemAlloc((void*) sz);
+        }
 
         private static IntPtr _MemFreeFnPtr;
         private static MemFreeFn _MemFreeFnDelegate;
@@ -259,7 +302,11 @@ namespace ImGuiNET {
             Invoke:
             _MemFreeFnDelegate(ptr);
         }
-        public void MemFree(IntPtr ptr) => MemFree((void*) ptr);
+
+        public void MemFree(IntPtr ptr)
+        {
+            MemFree((void*) ptr);
+        }
 
     }
 
@@ -290,14 +337,14 @@ namespace ImGuiNET {
         public bool this[int button] {
             get {
                 if (button < 0 || button > 5) {
-                    throw new ArgumentOutOfRangeException(nameof(button));
+                    throw new ArgumentOutOfRangeException("button");
                 }
 
                 return _nativePtr->MouseDown[button] == 1;
             }
             set {
                 if (button < 0 || button > 5) {
-                    throw new ArgumentOutOfRangeException(nameof(button));
+                    throw new ArgumentOutOfRangeException("button");
                 }
 
                 byte pressed = value ? (byte) 1 : (byte) 0;
@@ -316,14 +363,14 @@ namespace ImGuiNET {
         public bool this[int key] {
             get {
                 if (key < 0 || key > 512) {
-                    throw new ArgumentOutOfRangeException(nameof(key));
+                    throw new ArgumentOutOfRangeException("key");
                 }
 
                 return _nativePtr->KeysDown[key] == 1;
             }
             set {
                 if (key < 0 || key > 512) {
-                    throw new ArgumentOutOfRangeException(nameof(key));
+                    throw new ArgumentOutOfRangeException("key");
                 }
 
                 byte pressed = value ? (byte) 1 : (byte) 0;

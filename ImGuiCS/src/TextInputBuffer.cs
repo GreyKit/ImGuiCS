@@ -27,7 +27,7 @@ namespace ImGuiNET {
 
         public TextInputBuffer(int length = 1024) {
             if (length < 0) {
-                throw new ArgumentOutOfRangeException(nameof(length));
+                throw new ArgumentOutOfRangeException("length");
             }
 
             CreateBuffer(length);
@@ -86,7 +86,10 @@ namespace ImGuiNET {
             }
         }
 
-        public override string ToString() => StringValue;
+        public override string ToString()
+        {
+            return StringValue;
+        }
 
         public static TextInputBuffer[] CreateBuffers(int size, int bufferLength = 1024) {
             TextInputBuffer[] buffers = new TextInputBuffer[size];
@@ -97,8 +100,11 @@ namespace ImGuiNET {
 
         public static void DisposeBuffers(TextInputBuffer[] buffers) {
             for (int i = 0; i < buffers.Length; i++) {
-                buffers[i]?.Dispose();
-                buffers[i] = null;
+                if (buffers[i] != null)
+                {
+                    buffers[i].Dispose();
+                    buffers[i] = null;
+                }                
             }
         }
 

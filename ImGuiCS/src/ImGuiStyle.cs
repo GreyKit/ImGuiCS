@@ -190,7 +190,10 @@ namespace ImGuiNET {
         /// </summary>
         /// <param name="target">The type of UI element.</param>
         /// <returns>The element's color as currently configured.</returns>
-        public ImVec4 GetColor(ImGuiCol target) => *(ImVec4*) &Native->Colors[(int) target * 4];
+        public ImVec4 GetColor(ImGuiCol target)
+        {
+            return *(ImVec4*)&Native->Colors[(int)target * 4];
+        }
 
         /// <summary>
         /// Sets the style color for a particular UI element type.

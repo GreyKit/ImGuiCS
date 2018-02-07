@@ -26,6 +26,10 @@ namespace ImGuiXNA {
             new VertexElement(UVOffset, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0),
             new VertexElement(ColOffset, VertexElementFormat.Color, VertexElementUsage.Color, 0)
         );
-        public VertexDeclaration VertexDeclaration => _VertexDeclaration;
+
+        public VertexDeclaration VertexDeclaration
+        {
+            get { return _VertexDeclaration; }
+        }
     }
 }

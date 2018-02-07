@@ -3,10 +3,18 @@
 namespace ImGuiNET {
     // Those didn't exist in vanilla ImGui.NET, but we're dropping System.Numerics
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct ImVec2 {
+    public unsafe struct ImVec2
+    {
 
-        public static ImVec2 Zero => new ImVec2(0f, 0f);
-        public static ImVec2 One => new ImVec2(1f, 1f);
+        public static ImVec2 Zero
+        {
+            get { return new ImVec2(0f, 0f); }
+        }
+
+        public static ImVec2 One
+        {
+            get { return new ImVec2(1f, 1f); }
+        }
 
         public float x, y;
 

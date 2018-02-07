@@ -35,7 +35,11 @@ namespace ImGuiXNA {
         private int _ScrollWheelValue;
 
         private static bool _Initialized = false;
-        public static bool Initialized => _Initialized;
+
+        public static bool Initialized
+        {
+            get { return _Initialized; }
+        }
 
         private static List<int> _Keys = new List<int>();
 
@@ -97,7 +101,10 @@ namespace ImGuiXNA {
 
 
 
-        public static void OnTextInput(char c) => ImGui.AddInputCharacter(c);
+        public static void OnTextInput(char c)
+        {
+            ImGui.AddInputCharacter(c);
+        }
 #if FNA
         // This would depend on an FNA extension. @flibitijibibo?
         public readonly static GetClipboardTextFn GetClipboardTextFn = (userData) => SDL2.SDL.SDL_GetClipboardText();
@@ -192,7 +199,7 @@ namespace ImGuiXNA {
                 return;
             }
 
-            throw new Exception($"Default ImGuiXNAState.SetupEffect can't deal with {_effect.GetType().FullName}, please provide your own delegate.");
+            throw new Exception("Default ImGuiXNAState.SetupEffect can't deal with " + _effect.GetType().FullName + ", please provide your own delegate.");
         }
 
         public Action<ImGuiXNAState, Effect, Texture2D> SetEffectTexture = _SetEffectTexture;
@@ -211,7 +218,7 @@ namespace ImGuiXNA {
                 return;
             }
 
-            throw new Exception($"Default ImGuiXNAState.SetEffectTexture can't deal with {_effect.GetType().FullName}, please provide your own delegate.");
+            throw new Exception("Default ImGuiXNAState.SetEffectTexture can't deal with " + _effect.GetType().FullName + ", please provide your own delegate.");
         }
 
         public void NewFrame(GameTime gameTime) {
