@@ -9,7 +9,7 @@ namespace ImGuiSDL2CS {
     public static class SDL2Helper {
 
         private static bool _Initialized = false;
-        public static bool Initialized => _Initialized;
+        public static bool Initialized { get { return _Initialized; } }
 
         public static void Init() {
             if (_Initialized)

@@ -62,7 +62,9 @@ namespace ImGuiSDL2CS {
         }
 
         public bool ImGuiOnEvent(SDL2Window window, SDL.SDL_Event e)
-            => ImGuiSDL2CSHelper.HandleEvent(e, ref g_MouseWheel, g_MousePressed);
+        {
+            return ImGuiSDL2CSHelper.HandleEvent(e, ref g_MouseWheel, g_MousePressed);
+        }
 
         public void ImGuiOnLoop(SDL2Window window) {
             GL.ClearColor(0.1f, 0.125f, 0.15f, 1f);
@@ -87,9 +89,9 @@ namespace ImGuiSDL2CS {
 
         public virtual void ImGuiLayout() {
             if (_IsSuperClass)
-                ImGui.Text($"Create a new class inheriting {GetType().FullName}, overriding {nameof(ImGuiLayout)}!");
+                ImGui.Text("Create a new class inheriting {GetType().FullName}, overriding ImGuiLayout!");
             else
-                ImGui.Text($"Override {nameof(ImGuiLayout)} in {GetType().FullName}!");
+                ImGui.Text("Override ImGuiLayout in {GetType().FullName}!");
         }
 
         protected virtual void Create() {

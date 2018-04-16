@@ -125,8 +125,11 @@ namespace ImGuiSDL2CS {
 
         public delegate IntPtr glGetString(Enum pname);
         private static glGetString _GetString = _<glGetString>();
+
         public static string GetString(Enum pname)
-            => new string((sbyte*) _GetString(pname));
+        {
+            return new string((sbyte*) _GetString(pname));
+        }
 
         public delegate void glGetIntegerv(Enum pname, out int param);
         public static glGetIntegerv GetIntegerv = _<glGetIntegerv>();

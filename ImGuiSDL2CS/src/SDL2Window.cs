@@ -8,10 +8,11 @@ namespace ImGuiSDL2CS {
     public class SDL2Window : IDisposable {
 
         protected IntPtr _Handle;
-        public IntPtr Handle => _Handle;
+        public IntPtr Handle { get { return _Handle; } }
 
         protected IntPtr _GLContext;
-        public IntPtr GLContext => _GLContext;
+
+        public IntPtr GLContext { get { return _GLContext; } }
 
         public string Title {
             get {
@@ -74,7 +75,10 @@ namespace ImGuiSDL2CS {
             }
         }
 
-        public SDL.SDL_WindowFlags Flags => (SDL.SDL_WindowFlags) SDL.SDL_GetWindowFlags(_Handle);
+        public SDL.SDL_WindowFlags Flags
+        {
+            get { return (SDL.SDL_WindowFlags) SDL.SDL_GetWindowFlags(_Handle); }
+        }
 
         public Action<SDL2Window> OnLoop;
         public Func<SDL2Window, SDL.SDL_Event, bool> OnEvent;
@@ -108,9 +112,19 @@ namespace ImGuiSDL2CS {
             }
         }
 
-        public bool IsVisible => (Flags & SDL.SDL_WindowFlags.SDL_WINDOW_HIDDEN) == 0;
-        public void Show() => SDL.SDL_ShowWindow(_Handle);
-        public void Hide() => SDL.SDL_HideWindow(_Handle);
+        public bool IsVisible
+        {
+            get { return (Flags & SDL.SDL_WindowFlags.SDL_WINDOW_HIDDEN) == 0; }
+        }
+
+        public void Show()
+        {
+            SDL.SDL_ShowWindow(_Handle);
+        }
+
+        public void Hide() {
+            SDL.SDL_HideWindow(_Handle);
+        }
 
         public virtual void Run() {
             Show();
@@ -139,7 +153,10 @@ namespace ImGuiSDL2CS {
                 IsAlive = false;
         }
 
-        public virtual void Swap() => SDL.SDL_GL_SwapWindow(_Handle);
+        public virtual void Swap()
+        {
+            SDL.SDL_GL_SwapWindow(_Handle);
+        }
 
         protected virtual void Dispose(bool disposing) {
             if (disposing) {

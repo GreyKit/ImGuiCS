@@ -27,7 +27,8 @@ namespace ImGuiXNA {
         private int WndProcHook(int nCode, IntPtr wParam, ref Win32.Message lParam) {
             if (nCode >= 0) {
                 Win32.TranslateMessage(ref lParam);
-                Hook?.Invoke(ref lParam);
+                if(Hook != null)
+                    Hook.Invoke(ref lParam);
             }
 
             return Win32.CallNextHookEx(HandleHook, nCode, wParam, ref lParam);
@@ -36,7 +37,8 @@ namespace ImGuiXNA {
         internal delegate void HookDelegate(ref Win32.Message msg);
         public HookDelegate Hook;
 
-        public void Dispose() => Dispose(true);
+        public void Dispose() { Dispose(true); }
+
         private void Dispose(bool disposing) {
             if (HandleHook == IntPtr.Zero)
                 return;
