@@ -55,7 +55,7 @@ namespace ImGuiNET {
                 ChosenPath = "";
             }
             if (dialogTriggerButton || (!Rescan && string.IsNullOrEmpty(ChosenPath))) {
-                ChooseFileMainMethod(directory, false, false, "", fileFilterExtensionString, windowTitle, windowSize, windowPos, windowAlpha);
+                ChosenPath = ChooseFileMainMethod(directory, false, false, "", fileFilterExtensionString, windowTitle, windowSize, windowPos, windowAlpha);
             }
             return ChosenPath;
         }
@@ -73,7 +73,7 @@ namespace ImGuiNET {
                 ChosenPath = "";
             }
             if (dialogTriggerButton || (!Rescan && string.IsNullOrEmpty(ChosenPath))) {
-                ChooseFileMainMethod(directory, true, false, "", "", windowTitle, windowSize, windowPos, windowAlpha);
+	            ChosenPath = ChooseFileMainMethod(directory, true, false, "", "", windowTitle, windowSize, windowPos, windowAlpha);
             }
             return ChosenPath;
         }
@@ -93,7 +93,7 @@ namespace ImGuiNET {
                 ChosenPath = "";
             }
             if (dialogTriggerButton || (!Rescan && string.IsNullOrEmpty(ChosenPath))) {
-                ChooseFileMainMethod(directory, false, true, "", "", windowTitle, windowSize, windowPos, windowAlpha);
+	            ChosenPath = ChooseFileMainMethod(directory, false, true, "", "", windowTitle, windowSize, windowPos, windowAlpha);
             }
             return ChosenPath;
         }
@@ -562,7 +562,7 @@ namespace ImGuiNET {
                     if (isSelectFolderDialog) {
                         rv = I.currentFolder;
                         I.open = true;
-                    }
+                     }
                     else if (isSaveFileDialog)  {
                         if (I.saveFileName.Length>0)  {
                             bool pathOk = true;
