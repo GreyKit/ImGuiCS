@@ -57,7 +57,10 @@ namespace ImGuiNET {
             if (dialogTriggerButton || (!Rescan && string.IsNullOrEmpty(ChosenPath))) {
                 ChosenPath = ChooseFileMainMethod(directory, false, false, "", fileFilterExtensionString, windowTitle, windowSize, windowPos, windowAlpha);
             }
-            return ChosenPath;
+	        LastDirectory = directory;
+	        if (ChosenPath != null)
+		        LastDirectory = Path.GetDirectoryName(ChosenPath);
+			return ChosenPath;
         }
 
         public string ChooseFolderDialog(
@@ -75,7 +78,10 @@ namespace ImGuiNET {
             if (dialogTriggerButton || (!Rescan && string.IsNullOrEmpty(ChosenPath))) {
 	            ChosenPath = ChooseFileMainMethod(directory, true, false, "", "", windowTitle, windowSize, windowPos, windowAlpha);
             }
-            return ChosenPath;
+	        LastDirectory = directory;
+	        if (ChosenPath != null)
+		        LastDirectory = ChosenPath;
+			return ChosenPath;
         }
 
         public string SaveFileDialog(
@@ -95,6 +101,10 @@ namespace ImGuiNET {
             if (dialogTriggerButton || (!Rescan && string.IsNullOrEmpty(ChosenPath))) {
 	            ChosenPath = ChooseFileMainMethod(directory, false, true, "", "", windowTitle, windowSize, windowPos, windowAlpha);
             }
+
+	        LastDirectory = directory;
+	        if (ChosenPath != null)
+		        LastDirectory = Path.GetDirectoryName(ChosenPath);
             return ChosenPath;
         }
 
