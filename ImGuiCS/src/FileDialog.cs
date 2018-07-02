@@ -58,7 +58,7 @@ namespace ImGuiNET {
                 ChosenPath = ChooseFileMainMethod(directory, false, false, "", fileFilterExtensionString, windowTitle, windowSize, windowPos, windowAlpha);
             }
 	        LastDirectory = directory;
-	        if (ChosenPath != null)
+	        if (!string.IsNullOrEmpty(ChosenPath))
 		        LastDirectory = Path.GetDirectoryName(ChosenPath);
 			return ChosenPath;
         }
