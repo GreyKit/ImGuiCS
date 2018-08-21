@@ -283,7 +283,6 @@ namespace ImGuiNET {
             public string saveFileName;
             //----------------------------------------------------
 
-            public string chosenPath;
             public bool rescan;
             public int uniqueNumber;
 
@@ -325,7 +324,6 @@ namespace ImGuiNET {
 				uniqueNumber = 0;
 
 				rescan = true;
-				chosenPath = "";
 
 				filter.Clear();
 				allowFiltering = false;

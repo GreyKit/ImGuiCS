@@ -159,7 +159,7 @@ namespace ImGuiNET {
         ) {
             //-----------------------------------------------------------------------------
             Internal I = _internal;
-            string rv = I.chosenPath = "";
+            string rv = "";
             //-----------------------------------------------------
             bool isSelectFolderDialog = I.isSelectFolderDialog = _isFolderChooserDialog;
             bool isSaveFileDialog = I.isSaveFileDialog = _isSaveFileDialog;
